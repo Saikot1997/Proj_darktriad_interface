@@ -1,13 +1,12 @@
 import streamlit as st
 from pathlib import Path
 
-parent_path = Path(__file__).parent.parent
 
 def info_page():
     # Display an image
     st.markdown("")
     st.markdown(":red[The Dark Triad] refers to the trio of the three personality traits - narcissism, psychopathy and Marchiavellianism.")
-    image_file = Path(parent_path, "images", "image_front.jpg").absolute().as_posix()
+    image_file = "image_front.jpg"
     st.image(image_file, caption="Dark Triad", use_column_width=True)
     
     # st.header("Page Info Content")
