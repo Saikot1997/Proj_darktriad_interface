@@ -1,7 +1,6 @@
 import streamlit as st
 from pathlib import Path
 
-parent_path = Path(__file__).parent.parent
 
 def front_page():
     # st.header("Page Front Content")
@@ -25,4 +24,4 @@ def show_initial_text():
     # Display an image from a file
     image_file = "chess (1).jpg"
 
-    st.image(image_file, use_column_width=True)
+    st.image(image_file)
