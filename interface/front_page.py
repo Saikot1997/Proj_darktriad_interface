@@ -20,8 +20,9 @@ def show_initial_text():
     st.markdown("Simply answer 28 questions by selecting a score from :red[1  (strongly disagree)] to :violet[5 (strongly agree)]. It's as easy as giving your honest opinion.")
     st.markdown(" ")
     st.markdown(" ")
-
+    import os
     # Display an image from a file
-    image_file = "./chess (1).jpg"
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    image_file = os.path.join(current_dir, "chess (1).jpg")
 
-    st.image(image_file,caption='Dark Triad', use_column_width=True)
+    st.image(image_file, caption='Dark Triad', use_column_width=True)
