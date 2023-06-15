@@ -6,7 +6,7 @@ def info_page():
     # Display an image
     st.markdown("")
     st.markdown(":red[The Dark Triad] refers to the trio of the three personality traits - narcissism, psychopathy and Marchiavellianism.")
-    image_file = "(./image_front.jpg"
+    image_file = "./image_front.jpg"
     st.image(image_file, caption="Dark Triad", use_column_width=True)
     
     # st.header("Page Info Content")
