@@ -11,12 +11,6 @@ from Feat_engine import feature_engineering
 import requests
 from graphs import draw_map, draw_question_dist_barplots, draw_bubble_plot, plot_results
 
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-PORT = os.getenv('PORT')
 
 def result_page():
     st.balloons()
@@ -42,7 +36,7 @@ def placement(x:int):
 
 def finish():
     answers=st.session_state.answers
-    api_url = f'http://localhost:{PORT}/predict?user_answers={answers}'
+    api_url = f'https://dtimage-i4l64bzm2a-ew.a.run.app/predict?user_answers={answers}'
 
     #st.write(answers)
 
