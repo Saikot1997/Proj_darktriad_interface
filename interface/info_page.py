@@ -11,7 +11,7 @@ def info_page():
 
     image_file = os.path.join(os.path.dirname(__file__), "image_front.jpg")
 
-    st.image(image_file, caption="Dark Triad", use_column_width=True)
+    st.image(image_file, use_column_width=True)
 
     
     # st.header("Page Info Content")
