@@ -3,40 +3,19 @@ This file holds functions that draw different plots
 """
 
 ### IMPORTING LIBRARIES/PACKAGES
-from preprocess import preprocess
-from Feat_engine import feature_engineering
-from performance_eval import pred
-from joblib import load
 import pandas as pd
 import plotly.express as px
-import country_converter as coco
 import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
+from questions import QUESTIONS
 
 ### DRAWS MAP OF THE WORLD WITH AVERAGE SCORES SHOWN
 # This expects the raw dataframe (i.e. X = pd.read(URL))
 def draw_map():
-    X = pd.read_csv("https://raw.githubusercontent.com/Habeus-Crimpus/Dark_Triad/main/data.csv",delimiter = '\t')
-    country = X.country
-    X = preprocess(X)
-    X = feature_engineering(X)
-    X['Overall_Avg'] = X[['Narcissism_Avg', 'Psychopathy_Avg', 'Machiavellianism_Avg']].mean(axis = 1).round(3)
-    X['country'] = country
-    X = X[['country', 'Narcissism_Avg', 'Psychopathy_Avg', 'Machiavellianism_Avg', 'Overall_Avg']]
-    tmp = X.groupby('country').mean()
-    tmp.reset_index(inplace=True)
-    tmp = tmp.iloc[2:]
-    countries = tmp.country
-    countries_to_drop = ['AP', 'AN', 'EU']
-    tmp.country = countries[~countries.isin(countries_to_drop)].dropna()
-    tmp.dropna(inplace=True)
-    cc = coco.CountryConverter()
-    iso3_codes = cc.pandas_convert(series = tmp.country, to = 'ISO3')
-    countries_full_name = cc.pandas_convert(series = tmp.country, to = 'name_short')
-    tmp['country_code'] = iso3_codes
-    tmp['country_name'] = countries_full_name
-    fig = px.choropleth(tmp,
+    X = pd.read_csv("map_df.csv")
+
+    fig = px.choropleth(X,
                         locations = 'country_code',
                         color = 'Overall_Avg',
                         hover_data = ['Narcissism_Avg',
@@ -123,34 +102,6 @@ def draw_question_dist_barplots(question):
             tmp.append(1)
     df['Machiavellianism_Category'] = tmp
 
-    questions = ["It's not wise to tell your secrets.",
-                 "I like to use clever manipulation to get my way.",
-                 "Whatever it takes, you must get the important people on your side. ",
-                 "Avoid direct conflict with others because they may be useful in the future.",
-                 "It's wise to keep track of information that you can use against people later.",
-                 "You should wait for the right time to get back at people. ",
-                 "There are things you should hide from other people because they don't need to know.",
-                 "Make sure your plans benefit you, not others.",
-                 "Most people can be manipulated.",
-                 "People see me as a natural leader. ",
-                 "I hate being the center of attention.",
-                 "Many group activities tend to be dull without me.",
-                 "I know that I am special because everyone keeps telling me so. ",
-                 "I like to get acquainted with important people. ",
-                 "I feel embarrassed if someone compliments me.",
-                 "I have been compared to famous people. ",
-                 "I am an average person.",
-                 "I insist on getting the respect I deserve.",
-                 "I like to get revenge on authorities.",
-                 "I avoid dangerous situations.",
-                 "Payback needs to be quick and nasty. ",
-                 "People often say I'm out of control. ",
-                 "It's true that I can be mean to others. ",
-                 "People who mess with me always regret it.",
-                 "I have never gotten into trouble with the law.",
-                 "I enjoy having sex with people I hardly know.",
-                 "I'll say anything to get what I want.",
-                 "Are you a US citizen?"]
     column_names = ['M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M7', 'M8', 'M9', 'N1',
                     'N2', 'N3', 'N4', 'N5', 'N6', 'N7', 'N8', 'N9', 'P1', 'P2',
                     'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9']
@@ -159,7 +110,7 @@ def draw_question_dist_barplots(question):
         column_values = df[column_name]
         value_counts = column_values.value_counts()
         position = column_names.index(column_name)
-        question = questions[position]
+        question = QUESTIONS[position]
         if column_name[0] == 'M':
             fig = plt.bar(value_counts.index, value_counts.values, color = 'blue')
         elif column_name[0] == 'N':
@@ -176,36 +127,8 @@ def draw_question_dist_barplots(question):
 
 ### Draws the Average Question Scores scatterplot (bubble plots)
 def draw_bubble_plot():
-    df = pd.read_csv("https://raw.githubusercontent.com/Habeus-Crimpus/Dark_Triad/main/data.csv",delimiter = '\t')
-    df.drop_duplicates(inplace = True)
-    df.dropna(inplace=True)
-    df.drop("source", axis=1, inplace = True)
-    flip_cols = ['N2', 'N6', 'N8', 'P2', 'P4', 'P7']
-    for col in flip_cols:
-        for i in df[col]:
-            if df[col][i] == 1:
-                df[col][i] = 5
-            elif df[col][i] == 5:
-                df[col][i] = 1
-            elif df[col][i] == 4:
-                df[col][i] = 2
-            elif df[col][i] == 2:
-                df[col][i] = 4
-    df.replace(0,3, inplace=True)
-    df.drop(columns = 'country', inplace = True)
-    narcis_df = df[['N1', 'N2', 'N3', 'N4', 'N5', 'N6', 'N7', 'N8', 'N9']]
-    mach_df = df[['M1', 'M2', 'M3', 'M4', 'M5', 'M6', 'M7', 'M8', 'M9']]
-    psych_df = df[['P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7', 'P8', 'P9']]
-    question_avg_scores = df.mean(axis = 0).reset_index()
-    trait_type = ['Machiavellianism', 'Machiavellianism', 'Machiavellianism', 'Machiavellianism',
-              'Machiavellianism', 'Machiavellianism', 'Machiavellianism', 'Machiavellianism',
-              'Machiavellianism', 'Narcissism','Narcissism', 'Narcissism', 'Narcissism',
-              'Narcissism', 'Narcissism', 'Narcissism', 'Narcissism', 'Narcissism',
-              'Psychopathy', 'Psychopathy', 'Psychopathy', 'Psychopathy', 'Psychopathy',
-              'Psychopathy', 'Psychopathy', 'Psychopathy', 'Psychopathy']
-    question_avg_scores['Trait_Type'] = trait_type
-    question_avg_scores.rename(columns = {0: 'Average_Score'}, inplace=True)
-    question_avg_scores.Average_Score = question_avg_scores.Average_Score.round(3)
+    question_avg_scores = pd.read_csv("bubble_df.csv")
+
     color_map = {'Machiavellianism': 'rgb(7, 28, 105)',
              'Narcissism': 'rgb(2, 168, 10)',
              'Psychopathy': 'rgb(133, 9, 32)'}
@@ -250,10 +173,7 @@ def draw_bubble_plot():
     #bubble_fig.show()
     return bubble_fig
 
-def plot_results(user_answer):
-
-    tmp = load("models.joblib")
-    predicted_vals = pred(tmp, user_answer)
+def plot_results(predicted_vals):
     PSY = predicted_vals[0]
     NAR = predicted_vals[1]
     MAC = predicted_vals[2]

@@ -1,29 +1,12 @@
 import streamlit as st
-import json
-import streamlit as st
-import pandas as pd
-import numpy as np
-import plotly.express as px
-import plotly.graph_objects as go
-#from params import DATA_PATH
-from preprocess import preprocess
-from Feat_engine import feature_engineering
 import requests
-from graphs import draw_map, draw_question_dist_barplots, draw_bubble_plot, plot_results
+from graphs import draw_map, draw_bubble_plot, plot_results
 
 
 def result_page():
     st.balloons()
     st.header("Your personal result")
-    #st.write("Your result")
-    #st.markdown(" ")
-
     finish()
-    #st.button("Results",on_click=finish(st.session_state.answers),key="a44")
-    # Add content specific to Page 4
-    # scores
-    # plots
-    # interpretation
 
 def placement(x:int):
    if x == -1:
@@ -38,10 +21,7 @@ def finish():
     answers=st.session_state.answers
     api_url = f'https://dtimage-i4l64bzm2a-ew.a.run.app/predict?user_answers={answers}'
 
-    #st.write(answers)
-
     response = requests.get(api_url)
-    global preds
     preds = response.json()
 
     st.divider()
@@ -55,7 +35,7 @@ def finish():
     st.subheader('MACHIAVELLIANISM')
     placement(preds["Mach_Pred"])
 
-    st.pyplot(plot_results(answers))
+    st.pyplot(plot_results(preds))
 
     st.markdown(" ")
     st.markdown(" ")
