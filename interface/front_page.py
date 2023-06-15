@@ -23,5 +23,6 @@ def show_initial_text():
     st.markdown(" ")
 
     # Display an image from a file
-    image_file = Path(parent_path, "chess (1).jpg").absolute().as_posix()
+    image_file = "chess (1).jpg"
+
     st.image(image_file, use_column_width=True)
