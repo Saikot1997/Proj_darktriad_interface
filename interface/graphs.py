@@ -3,9 +3,9 @@ This file holds functions that draw different plots
 """
 
 ### IMPORTING LIBRARIES/PACKAGES
-from darktriad.ml_logic.preprocess import preprocess
-from darktriad.ml_logic.Feat_engine import feature_engineering
-from darktriad.ml_logic.performance_eval import pred
+from preprocess import preprocess
+from Feat_engine import feature_engineering
+from performance_eval import pred
 from joblib import load
 import pandas as pd
 import plotly.express as px
