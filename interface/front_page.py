@@ -24,4 +24,4 @@ def show_initial_text():
     # Display an image from a file
     image_file = "./chess (1).jpg"
 
-    st.image(image_file,caption='Image Caption', use_column_width=True)
+    st.image(image_file,caption='Dark Triad', use_column_width=True)
