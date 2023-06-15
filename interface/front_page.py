@@ -25,4 +25,4 @@ def show_initial_text():
     current_dir = os.path.dirname(os.path.abspath(__file__))
     image_file = os.path.join(current_dir, "chess (1).jpg")
 
-    st.image(image_file, caption='Dark Triad', use_column_width=True)
+    st.image(image_file, use_column_width=True)
