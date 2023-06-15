@@ -6,10 +6,10 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 #from params import DATA_PATH
-from darktriad.ml_logic.preprocess import preprocess
-from darktriad.ml_logic.Feat_engine import feature_engineering
+from preprocess import preprocess
+from Feat_engine import feature_engineering
 import requests
-from darktriad.ml_logic.graphs import draw_map, draw_question_dist_barplots, draw_bubble_plot, plot_results
+from graphs import draw_map, draw_question_dist_barplots, draw_bubble_plot, plot_results
 
 import os
 from dotenv import load_dotenv
