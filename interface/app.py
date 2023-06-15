@@ -2,10 +2,10 @@
 Creates the interface (streamlit)
 '''
 import streamlit as st
-from darktriad.interface.info_page import info_page
-from darktriad.interface.front_page import front_page
-from darktriad.interface.test_page import test_page
-from darktriad.interface.result_page import result_page
+from info_page import info_page
+from front_page import front_page
+from test_page import test_page
+from result_page import result_page
 
 start_button_clicked = False
 
