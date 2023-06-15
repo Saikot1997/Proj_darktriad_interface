@@ -22,6 +22,6 @@ def show_initial_text():
     st.markdown(" ")
 
     # Display an image from a file
-    image_file = "chess (1).jpg"
+    image_file = "./chess (1).jpg"
 
-    st.image(image_file)
+    st.image(image_file,caption='Image Caption', use_column_width=True)
