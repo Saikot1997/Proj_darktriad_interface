@@ -174,9 +174,9 @@ def draw_bubble_plot():
     return bubble_fig
 
 def plot_results(predicted_vals):
-    PSY = predicted_vals[0]
-    NAR = predicted_vals[1]
-    MAC = predicted_vals[2]
+    PSY = predicted_vals["Psych_Pred"]
+    NAR = predicted_vals["Narc_Pred"]
+    MAC = predicted_vals["Mach_Pred"]
 
     C = ['PSYCHOPATHY', 'NARCISSISM', 'MACHIAVELLIANISM']
 
