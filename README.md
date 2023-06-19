@@ -1,13 +1,8 @@
 # Dark Triad Classification Project Overview
 
-Available June 16th, 2023
-
-## TL;DR
-
 **Goal:**
 
 - Predict score category for dark triad traits based on SD3 questionnaire.
-- Predict user-reported honesty rating based on HSNS and DD questionnaire.
 
 **Languages/Applications Used:**
 
