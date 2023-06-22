@@ -6,7 +6,7 @@ import os
 def info_page():
     # Display an image
     st.markdown("")
-    st.markdown(":red[The Dark Triad] refers to the trio of the three personality traits - narcissism, psychopathy and Marchiavellianism.")
+    st.markdown(":red[The Dark Triad] refers to the trio of the three personality traits - narcissism, psychopathy and Machiavellianism.")
     
 
     image_file = os.path.join(os.path.dirname(__file__), "image_front.jpg")
